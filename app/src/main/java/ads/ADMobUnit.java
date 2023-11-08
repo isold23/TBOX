@@ -24,7 +24,7 @@ import com.melon.tbox.R;
 
 import java.util.Locale;
 
-public class ADMobUnit {
+public class ADMobUnit implements ADUnit {
     private String TAG = "ADMOB";
     private AdCallback mAdCallback;
     private InterstitialAd mInterstitialAd;
