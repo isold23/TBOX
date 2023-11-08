@@ -3,6 +3,7 @@ package ads;
 import android.content.Context;
 
 public class ADByteDanceUnit implements ADUnit{
+    private String TAG = "ADByteDance";
     @Override
     public void initAd(Context context) {
 

@@ -164,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
         } else if(select_item.equals(downloadPlatform[1])) {
             GoogleAnalytics.LogEvent("KuaiShouDownload", mDownloadTextView.getText().toString());
             downloadKuaiShouVideo.downloadVideo(mContext, mDownloadTextView.getText().toString());
-        } else if(select_item.equals(downloadPlatform[1])) {
+        } else if(select_item.equals(downloadPlatform[2])) {
             GoogleAnalytics.LogEvent("TikTokDownload", mDownloadTextView.getText().toString());
             downloadTiktokVideo.downloadVideo(mContext, mDownloadTextView.getText().toString());
-        } else if(select_item.equals(downloadPlatform[2])) {
+        } else if(select_item.equals(downloadPlatform[3])) {
             GoogleAnalytics.LogEvent("YouTubeDownload", mDownloadTextView.getText().toString());
             downloadYoutubeVideo.downloadVideo(mContext, mDownloadTextView.getText().toString());
         }
