@@ -1,6 +1,8 @@
 package com.melon.tbox;
 
 
+import ads.ADTencentUnit;
+import ads.AdCallback;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -56,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private final DownloadYouTubeVideo downloadYoutubeVideo = new DownloadYouTubeVideo();
 
     private Context mContext;
-    private final ADMobUnit adUnit = new ADMobUnit();
+    private final ADMobUnit mobAD = new ADMobUnit();
+    private final ADTencentUnit tencentAD = new ADTencentUnit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = this;
         //admob
-        adUnit.initAd(this);
-        adUnit.loadInterstitialAd(this);
+        mobAD.initAd(this);
+        mobAD.loadInterstitialAd(this);
+        tencentAD.initAd(this);
+        tencentAD.loadInterstitialAd(this);
         setCallback();
         //google analytics
         GoogleAnalytics.init(mContext);
@@ -77,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
         mDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (adUnit.isInterstitialAdValid()) {
-                    adUnit.showInterstitialAd(mContext);
+                if(tencentAD.isInterstitialAdValid()) {
+                    tencentAD.showInterstitialAd(mContext);
+                } else if (mobAD.isInterstitialAdValid()) {
+                    mobAD.showInterstitialAd(mContext);
                 } else {
                     download();
                 }
@@ -142,19 +149,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setCallback() {
-        adUnit.setCallback(new ADMobUnit.AdCallback() {
+        mobAD.setCallback(new AdCallback() {
             @Override
             public void onAdLoaded() {
                 //mDownloadButton.setEnabled(true);
-                Log.d(TAG, "MainActivity onAdLoaded.");
+                Log.d(TAG, "MobAD MainActivity onAdLoaded.");
             }
 
             @Override
             public void onAdShowComplete() {
-                Log.d(TAG, "MainActivity onAdShowComplete");
+                Log.d(TAG, "MobAD MainActivity onAdShowComplete");
                 download();
             }
         });
+        tencentAD.setCallback(new AdCallback() {
+            @Override
+            public void onAdLoaded() {
+                //mDownloadButton.setEnabled(true);
+                Log.d(TAG, "TencentAD MainActivity onAdLoaded.");
+            }
+
+            @Override
+            public void onAdShowComplete() {
+                Log.d(TAG, "TencentAD MainActivity onAdShowComplete");
+                download();
+            }
+        });
+
     }
 
     private void download() {
@@ -170,12 +191,6 @@ public class MainActivity extends AppCompatActivity {
         } else if(select_item.equals(downloadPlatform[3])) {
             GoogleAnalytics.LogEvent("YouTubeDownload", mDownloadTextView.getText().toString());
             downloadYoutubeVideo.downloadVideo(mContext, mDownloadTextView.getText().toString());
-        }
-    }
-
-    public static void unregister(Context context) {
-        if(broadcastReceiver.isOrderedBroadcast()) {
-            context.unregisterReceiver(broadcastReceiver);
         }
     }
 
@@ -210,5 +225,11 @@ public class MainActivity extends AppCompatActivity {
         };
 
         context.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    public static void unregister(Context context) {
+        if(broadcastReceiver.isOrderedBroadcast()) {
+            context.unregisterReceiver(broadcastReceiver);
+        }
     }
 }

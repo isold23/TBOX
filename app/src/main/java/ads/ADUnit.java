@@ -8,3 +8,5 @@ public interface ADUnit {
     public abstract void loadInterstitialAd(Context context);
     public abstract void showInterstitialAd(Context context);
 }
+
+

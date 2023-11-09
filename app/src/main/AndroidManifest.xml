@@ -6,9 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"
                      tools:ignore="ScopedStorage"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-            android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
             android:fullBackupContent="@xml/backup_rules"
             android:icon="@mipmap/ic_launcher"
@@ -51,8 +53,26 @@
                 android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                 android:exported="false"
                 android:theme="@android:style/Theme.Translucent"/>
+        <activity
+                tools:replace="android:screenOrientation"
+                android:name="com.qq.e.ads.PortraitADActivity"
+                android:screenOrientation="fullSensor"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+        <activity
+                tools:replace="android:screenOrientation"
+                android:name="com.qq.e.ads.LandscapeADActivity"
+                android:screenOrientation="landscape"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
-
+        <provider
+                android:name="com.qq.e.comm.GDTFileProvider"
+                android:authorities="${applicationId}.gdt.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/gdt_file_path" />
+        </provider>
     </application>
 
 </manifest>

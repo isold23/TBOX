@@ -30,11 +30,6 @@ public class ADMobUnit implements ADUnit {
     private InterstitialAd mInterstitialAd;
     public static long lastShowAdTimestamp;
 
-    public interface AdCallback{
-        public abstract void onAdLoaded();
-        public abstract void onAdShowComplete();
-    }
-
     public void setCallback(AdCallback callback) {
         this.mAdCallback = callback;
     }
