@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class ADTencentUnit implements ADUnit, RewardVideoADListener {
     private String TAG = "ADTENCENT";
+    private String appID = ADConstants.TENCENTAPPID_TEST;
+    private String posID = ADConstants.TENCENTPOSID_TEST;
     private RewardVideoAD mRewardVideoAD;
     private boolean mADLoaded = false;
     private boolean mADCached = false;
@@ -25,9 +27,9 @@ public class ADTencentUnit implements ADUnit, RewardVideoADListener {
     @Override
     public void initAd(Context context) {
         GlobalSetting.setEnableCollectAppInstallStatus(true);
-        GDTAdSdk.init(context, ADConstants.TENCENTAPPID);
+        GDTAdSdk.init(context, appID);
         GlobalSetting.setChannel(3);
-        mRewardVideoAD = new RewardVideoAD(context, ADConstants.TENCENTPOSID, this);
+        mRewardVideoAD = new RewardVideoAD(context, posID, this);
     }
 
     @Override
