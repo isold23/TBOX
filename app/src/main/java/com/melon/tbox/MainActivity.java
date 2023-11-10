@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void unregister(Context context) {
-        if(broadcastReceiver.isOrderedBroadcast()) {
+        if(broadcastReceiver != null && broadcastReceiver.isOrderedBroadcast()) {
             context.unregisterReceiver(broadcastReceiver);
         }
     }
