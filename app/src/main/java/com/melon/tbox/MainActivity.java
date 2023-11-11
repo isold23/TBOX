@@ -4,11 +4,9 @@ package com.melon.tbox;
 import ads.ADTencentUnit;
 import ads.AdCallback;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showAlertDialog();
         mContext = this;
         //admob
         mobAD.initAd(this);
@@ -153,12 +152,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdLoaded() {
                 //mDownloadButton.setEnabled(true);
-                Log.d(TAG, "MobAD MainActivity onAdLoaded.");
+                Log.d(TAG, "MainActivity onAdLoaded.");
             }
 
             @Override
             public void onAdShowComplete() {
-                Log.d(TAG, "MobAD MainActivity onAdShowComplete");
+                Log.d(TAG, "MainActivity onAdShowComplete");
                 download();
             }
         });
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAdShowComplete() {
-                Log.d(TAG, "TencentAD MainActivity onAdShowComplete");
+                Log.d(TAG, "MainActivity onAdShowComplete");
                 download();
             }
         });
@@ -231,5 +230,27 @@ public class MainActivity extends AppCompatActivity {
         if(broadcastReceiver != null && broadcastReceiver.isOrderedBroadcast()) {
             context.unregisterReceiver(broadcastReceiver);
         }
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("服务协议和隐私政策")
+                .setMessage("欢迎使用TBOX APP, 我们非常重视您的个人信息和隐私保护，在您使用TBOX之前，请您务必审慎阅读《用户协议》和《隐私政策》,并充分理解所有条款内容。我们将严格按照您同意的各项条款使用您的个人信息，以便更好的为您提供服务.")
+                .setCancelable(false)
+                .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when the positive button is clicked
+                    }
+                })
+                .setNegativeButton("不同意", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when the negative button is clicked
+                        finish();
+                    }
+                });
+
+        // Create and show the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
