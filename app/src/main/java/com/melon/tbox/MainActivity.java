@@ -10,6 +10,8 @@ import android.content.*;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
@@ -234,8 +236,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        TextView textView = new TextView(this);
+        textView.setLineSpacing(10, 1);
+        textView.setPadding(50, 30, 50, 30);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(R.string.privacy);
+
         builder.setTitle("服务协议和隐私政策")
-                .setMessage("欢迎使用TBOX APP, 我们非常重视您的个人信息和隐私保护，在您使用TBOX之前，请您务必审慎阅读《用户协议》和《隐私政策》,并充分理解所有条款内容。我们将严格按照您同意的各项条款使用您的个人信息，以便更好的为您提供服务.")
+                .setView(textView)
                 .setCancelable(false)
                 .setPositiveButton("同意", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
